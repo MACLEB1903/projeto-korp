@@ -2,7 +2,7 @@
 
 Projeto desenvolvido para o processo seletivo de estágio na Korp ERP, com o objetivo de avaliar habilidades com Docker, programação, redes, servidores e automação em ambiente Linux.
 
-Nesta etapa, foi construído um serviço HTTP em Golang e a estrutura inicial necessária para sua execução em container Docker.
+Nesta etapa, foi criada uma rede Docker no modo bridge para comunicação entre containers.
 
 ## Tecnologias Utilizadas
 
@@ -22,38 +22,42 @@ projeto-korp/
 
 ### Parte 1: Serviço e Arquitetura
 
+#### 1. Serviço HTTP
+
 - Servidor HTTP em Golang
 - Endpoint GET /projeto-korp
 - Retorno de resposta em formato JSON
 - Dockerfile para build da aplicação
+- Instalação e a configuração do Docker
+
+#### 2. Instalação e Configuração do Docker
+
+- Instalação e configuração do Docker em ambiente Linux
+- Validação do funcionamento do Docker
+
+#### 3. Configuração de Rede Docker
+
+- Criação de uma rede Docker
 
 ## Como Executar
 
-Para executar a aplicação, primeiro construa a imagem Docker:
+Para criar uma rede, execute:
 
 ```
-docker build -t http-server-projeto-korp ./app
-```
-
-Em seguida, execute o container:
-
-```
-docker run -d --name http-server-projeto-korp -p 8080:8080 http-server-projeto-korp
+docker network create korp-network
 ```
 
 ## Como Testar
 
-Para testar a aplicação, execute:
+Para validar se a rede foi criada:
 
 ```
-curl http://localhost:8080/projeto-korp
+docker network ls
 ```
 
 A resposta esperada é:
 
 ```
-{
-"nome": "Projeto Korp",
-"horario": "<horário_atual>"
-}
+NETWORK ID     NAME           DRIVER    SCOPE
+xxxxxxxxxxxx   korp-network   bridge    local
 ```

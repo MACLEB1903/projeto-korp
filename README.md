@@ -2,14 +2,14 @@
 
 Projeto desenvolvido para o processo seletivo de estágio na Korp ERP, com o objetivo de avaliar habilidades com Docker, programação, redes, servidores e automação em ambiente Linux.
 
-Nesta etapa, foi configurado o proxy reverso do NGINX por meio do arquivo http-server-projeto-korp.conf, encaminhando as requisições feitas para http://localhost:80 ao serviço http-server-projeto-korp na porta 8080.
+Nesta etapa, foi configurado o proxy reverso do NGINX por meio do arquivo `http-server-projeto-korp.conf`, encaminhando as requisições feitas para `http://localhost:80` ao serviço `http-server-projeto-korp` na porta `8080`.
 
 ## Tecnologias Utilizadas
 
 - Golang
 - Docker
 - Docker Compose
-- Nginx
+- NGINX
 
 ## Estrutura do Projeto
 

@@ -1,0 +1,10 @@
+FROM golang:1.26.5-alpine3.24
+
+WORKDIR /docker-golang
+COPY . .
+
+ENV PORT=8080
+RUN go build -o http-server-projeto-korp .
+
+EXPOSE 8080
+CMD ["./http-server-projeto-korp"]

@@ -1,0 +1,29 @@
+services:
+  http-server-projeto-korp:
+    image: http-server-projeto-korp
+    container_name: http-server-projeto-korp
+    environment:
+      - PORT=8080
+    expose:
+      - "8080"
+    networks:
+      - korp-network
+
+  nginx:
+    image: nginx:alpine
+    networks:
+      - korp-network
+    ports:
+      - "80:80"
+    volumes:
+      - korp-volume:/etc/nginx/conf.d/
+    depends_on:
+      - http-server-projeto-korp
+
+volumes:
+  korp-volume:
+    name: korp-volume
+
+networks:
+  korp-network:
+    name: korp-network

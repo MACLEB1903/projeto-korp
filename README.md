@@ -2,7 +2,7 @@
 
 Projeto desenvolvido para o processo seletivo de estágio na Korp ERP, com o objetivo de avaliar habilidades com Docker, programação, redes, servidores e automação em ambiente Linux.
 
-Nesta etapa, foi criada uma rede Docker no modo bridge para comunicação entre containers.
+Nesta etapa, foram criados a rede Docker no modo bridge, os containers e o volume usando o docker-compose.yaml.
 
 ## Tecnologias Utilizadas
 
@@ -15,6 +15,7 @@ Nesta etapa, foi criada uma rede Docker no modo bridge para comunicação entre 
 projeto-korp/
 ├── app/
 ├── .gitignore
+├── docker-compose.yaml
 └── README.md
 ```
 
@@ -39,25 +40,44 @@ projeto-korp/
 
 - Criação de uma rede Docker
 
+#### 4. Docker Compose
+
+- Configurar dois containers: http-server-projeto-korp e nginx
+- Conectar ambos à mesma rede Docker
+- Manter o http-server-projeto-korp sem porta exposta ao host
+- Mapear a porta 80 do NGINX e montar o volume em /etc/nginx/conf.d/
+
 ## Como Executar
 
-Para criar uma rede, execute:
+Para criar os containers, a rede e o volume, execute:
 
 ```
-docker network create korp-network
+docker compose up --build
 ```
 
 ## Como Testar
 
-Para validar se a rede foi criada:
+Para validar se os containers, a rede e o volume foram criados:
 
 ```
+docker ps
 docker network ls
+docker volume ls
 ```
 
-A resposta esperada é:
+As respostas esperadas são:
+
+```
+CONTAINER ID   IMAGE                      ...   NAMES
+xxxxxxxxxxxx   nginx:alpine               ...   projeto-korp-nginx-1
+xxxxxxxxxxxx   http-server-projeto-korp   ...   http-server-projeto-korp
+```
 
 ```
 NETWORK ID     NAME           DRIVER    SCOPE
 xxxxxxxxxxxx   korp-network   bridge    local
+```
+
+```
+local     korp-volume
 ```

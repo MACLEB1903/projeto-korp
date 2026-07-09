@@ -69,9 +69,24 @@ Usando Ansible:
 
 ## Como Executar
 
+Verifique se você tem o Ansible instalado:
+
+```
+ansible-playbook --version
+```
+
+Caso não tenha, execute:
+
+```
+sudo apt update
+sudo apt install -y ansible
+ansible-playbook --version
+```
+
 Para executar o playbook, execute:
 
 ```
+cd projeto-korp
 ansible-playbook ansible/main.yaml
 ```
 

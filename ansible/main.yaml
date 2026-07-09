@@ -1,0 +1,66 @@
+---
+- name: Automação com Ansible
+  hosts: localhost
+  become: true
+  gather_facts: true
+  connection: local
+
+  tasks:
+    - name: Instalar dependências necessárias
+      ansible.builtin.apt:
+        name:
+          - ca-certificates
+          - curl
+        state: present
+        update_cache: true
+
+    - name: Criar diretório da chave GPG do Docker
+      ansible.builtin.file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: "0755"
+
+    - name: Baixar chave GPG oficial do Docker
+      ansible.builtin.get_url:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        dest: /etc/apt/keyrings/docker.asc
+        mode: "0644"
+
+    - name: Adicionar repositório oficial do Docker
+      ansible.builtin.apt_repository:
+        repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        state: present
+        filename: docker
+
+    - name: Instalar Docker e Docker Compose plugin
+      ansible.builtin.apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: present
+        update_cache: true
+
+    - name: Iniciar o serviço Docker
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Criar e executar serviços com Docker Compose
+      ansible.builtin.command:
+        cmd: docker compose up --build -d
+        chdir: "{{ playbook_dir }}/.."
+
+    - name: Validar endpoint principal da aplicação
+      ansible.builtin.uri:
+        url: http://localhost/projeto-korp
+        method: GET
+        return_content: true
+      register: get_response
+
+    - name: Exibir resposta da aplicação
+      ansible.builtin.debug:
+        msg: "{{ get_response.content }}"

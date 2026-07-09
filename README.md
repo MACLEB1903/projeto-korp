@@ -2,7 +2,7 @@
 
 Projeto desenvolvido para o processo seletivo de estágio na Korp ERP, com o objetivo de avaliar habilidades com Docker, programação, redes, servidores e automação em ambiente Linux.
 
-Nesta etapa, objetivo a é adicionar monitoramento ao serviço `http-server-projeto-korp` usando Grafana e Prometheus.
+Nesta última etapa, o objetivo é automatizar toda a configuração do ambiente descrita nas Partes 1 e 2 usando Ansible.
 
 ## Tecnologias Utilizadas
 
@@ -12,11 +12,13 @@ Nesta etapa, objetivo a é adicionar monitoramento ao serviço `http-server-proj
 - NGINX
 - Prometheus
 - Grafana
+- Ansbile
 
 ## Estrutura do Projeto
 
 ```text
 projeto-korp/
+├── ansible
 ├── app/
 ├── grafana/
 ├── nginx/
@@ -51,40 +53,35 @@ projeto-korp/
 - Atualizar Docker Compose
 - Testar coleta e visualização das métricas
 
+### Etapa 3: Automação com Ansible
+
+Usando Ansible:
+
+- Instalar Docker em ambiente Linux
+- Criar rede Docker
+- Fazer build da imagem da aplicação
+- Criar e executar containers com Docker Compose
+- Configurar NGINX como proxy reverso
+- Configurar Prometheus e Grafana
+- Validar endpoint com requisição HTTP
+- Exibir resposta da aplicação no console
+- Provisionar tudo com um único comando Ansible
+
 ## Como Executar
 
-Para rodar a aplicaçâo, execute:
+Para executar o playbook, execute:
 
 ```
-docker compose up --build
+ansible-playbook ansible/main.yaml
 ```
 
-## Como Testar
-
-Para validar se a aplicação está funcionando, execute:
+Você deverá ver um resultado semelhante a este:
 
 ```
-curl http://localhost:80/projeto-korp
-```
-
-```
-# A resposta esperada é:
-
-{
-    "nome":"Projeto Korp",
-    "horario":"2026-07-08T15:53:36Z"
+ok: [localhost] => {
+    "msg": {
+        "horario": "2026-07-09T04:53:25Z",
+        "nome": "Projeto Korp"
+    }
 }
-```
-
-Para validar se o Grafana está funcionando, acesse:
-
-```
-http://localhost:3000/
-```
-
-```
-# Use as seguintes credenciais:
-
-username: korp
-password: korp
 ```

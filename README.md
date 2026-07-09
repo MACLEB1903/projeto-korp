@@ -2,7 +2,7 @@
 
 Projeto desenvolvido para o processo seletivo de estágio na Korp ERP, com o objetivo de avaliar habilidades com Docker, programação, redes, servidores e automação em ambiente Linux.
 
-Nesta etapa, foi configurado o proxy reverso do NGINX por meio do arquivo `http-server-projeto-korp.conf`, encaminhando as requisições feitas para `http://localhost:80` ao serviço `http-server-projeto-korp` na porta `8080`.
+Nesta etapa, objetivo a é adicionar monitoramento ao serviço `http-server-projeto-korp` usando Grafana e Prometheus.
 
 ## Tecnologias Utilizadas
 
@@ -10,13 +10,17 @@ Nesta etapa, foi configurado o proxy reverso do NGINX por meio do arquivo `http-
 - Docker
 - Docker Compose
 - NGINX
+- Prometheus
+- Grafana
 
 ## Estrutura do Projeto
 
 ```text
 projeto-korp/
 ├── app/
+├── grafana/
 ├── nginx/
+├── prometheus
 ├── .gitignore
 ├── docker-compose.yaml
 └── README.md
@@ -28,40 +32,28 @@ projeto-korp/
 
 #### 1. Serviço HTTP
 
-- Servidor HTTP em Golang
-- Endpoint `GET /projeto-korp`
-- Retorno de resposta em formato JSON
-- Dockerfile para build da aplicação
-- Instalação e a configuração do Docker
+- Criar um servidor HTTP em Golang com o endpoint `GET /projeto-korp`.
+- Retornar uma resposta em formato JSON.
+- Criar o Dockerfile da aplicação.
+- Instalar, configurar e validar o Docker em ambiente Linux.
+- Criar uma rede Docker para comunicação entre containers.
+- Configurar o Docker Compose com os containers `http-server-projeto-korp` e `nginx`.
+- Configurar o NGINX como proxy reverso para encaminhar requisições à porta `8080`.
+- Testar o ambiente com curl `http://localhost:80/projeto-korp`.
 
-#### 2. Instalação e Configuração do Docker
+#### Etapa 2: Monitoramento com Prometheus e Grafana
 
-- Instalação e configuração do Docker em ambiente Linux
-- Validação do funcionamento do Docker
-
-#### 3. Configuração de Rede Docker
-
-- Criação de uma rede Docker
-
-#### 4. Docker Compose
-
-- Configurar dois containers: `http-server-projeto-korp` e `nginx`
-- Conectar ambos à mesma rede Docker
-- Manter o http-server-projeto-korp sem porta exposta ao host
-- Mapear a porta 80 do NGINX e montar o volume em `/etc/nginx/conf.d/`
-
-#### 5. Configuração do Proxy Reverso
-
-- Adição do arquivo `http-server-projeto-korp.conf` com a configuração do proxy reverso.
-- Encaminhamento das requisições feitas para `http://localhost:80` ao serviço na porta `8080`.
-
-#### 6. Teste de Funcionamento
-
-- Teste o ambiente usando `curl http://localhost:80/projeto-korp `.
+- Implementar métricas no serviço
+- Expor métricas no padrão Prometheus
+- Configurar Prometheus
+- Configurar Grafana
+- Criar dashboard no Grafana
+- Atualizar Docker Compose
+- Testar coleta e visualização das métricas
 
 ## Como Executar
 
-Para criar e iniciar os containers, a rede e o volume, execute:
+Para rodar a aplicaçâo, execute:
 
 ```
 docker compose up --build
@@ -69,14 +61,30 @@ docker compose up --build
 
 ## Como Testar
 
-Para validar se o serviço está funcionando, execute:
+Para validar se a aplicação está funcionando, execute:
 
 ```
 curl http://localhost:80/projeto-korp
 ```
 
-A resposta esperada é:
+```
+# A resposta esperada é:
+
+{
+    "nome":"Projeto Korp",
+    "horario":"2026-07-08T15:53:36Z"
+}
+```
+
+Para validar se o Grafana está funcionando, acesse:
 
 ```
-{"nome":"Projeto Korp","horario":"2026-07-08T15:53:36Z"}
+http://localhost:3000/
+```
+
+```
+# Use as seguintes credenciais:
+
+username: korp
+password: korp
 ```

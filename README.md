@@ -12,7 +12,7 @@ Nesta última etapa, o objetivo é automatizar toda a configuração do ambiente
 - NGINX
 - Prometheus
 - Grafana
-- Ansbile
+- Ansible
 
 ## Estrutura do Projeto
 
@@ -83,10 +83,16 @@ sudo apt install -y ansible
 ansible-playbook --version
 ```
 
-Para executar o playbook, execute:
+Clone o repositório e acesse a pasta do projeto:
 
 ```
+git clone https://github.com/MACLEB1903/projeto-korp.git
 cd projeto-korp
+```
+
+Executar o playbook:
+
+```
 ansible-playbook ansible/main.yaml
 ```
 
